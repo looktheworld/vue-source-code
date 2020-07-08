@@ -15,15 +15,15 @@ export default class Dep {
   id: number;
   subs: Array<Watcher>;
 
-  constructor () {
+  constructor() {
     this.id = uid++
-    this.subs = []
+    this.subs = [] // 存放依赖
   }
-
+  // 新增一个依赖
   addSub (sub: Watcher) {
     this.subs.push(sub)
   }
-
+  // 删除一个依赖
   removeSub (sub: Watcher) {
     remove(this.subs, sub)
   }
@@ -33,7 +33,7 @@ export default class Dep {
       Dep.target.addDep(this)
     }
   }
-
+  // 通知所有依赖更新
   notify () {
     // stabilize the subscriber list first
     const subs = this.subs.slice()

@@ -28,7 +28,7 @@ export function initMixin (Vue: Class<Component>) {
 
     // a flag to avoid this being observed
     vm._isVue = true
-    // merge options
+    // merge options 合并属性
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
@@ -49,14 +49,14 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
-    initEvents(vm)
-    initRender(vm)
-    callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
-    initState(vm)
-    initProvide(vm) // resolve provide after data/props
-    callHook(vm, 'created')
+    initLifecycle(vm) // 初始化生命周期
+    initEvents(vm) // 初始化事件
+    initRender(vm) // 初始化渲染
+    callHook(vm, 'beforeCreate') // 调用生命周期的钩子函数
+    initInjections(vm) // resolve injections before data/props  初始化injections
+    initState(vm) // 初始化props,methods,data,computed,watch
+    initProvide(vm) // resolve provide after data/props  初始化provide
+    callHook(vm, 'created') // 调用生命周期钩子函数
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
@@ -64,9 +64,9 @@ export function initMixin (Vue: Class<Component>) {
       mark(endTag)
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
-
+    // 传入el则调用$mount，否则不进入下一个生命周期，需用户手动触发vm.$mount
     if (vm.$options.el) {
-      vm.$mount(vm.$options.el)
+      vm.$mount(vm.$options.el) // 进入模板编译与挂载阶段
     }
   }
 }
